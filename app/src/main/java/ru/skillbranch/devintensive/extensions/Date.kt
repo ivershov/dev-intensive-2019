@@ -10,6 +10,7 @@ const val MINUTE_IN_MILLIS = 60 * SECOND_IN_MILLIS
 const val HOUR_IN_MILLIS = 60 * MINUTE_IN_MILLIS
 const val DAY_IN_MILLIS = 24 * HOUR_IN_MILLIS
 const val WEEK_IN_MILLIS = 7 * DAY_IN_MILLIS
+const val MONTH_IN_MILLIS = 30 * DAY_IN_MILLIS
 const val YEAR_IN_MILLIS = 365 * DAY_IN_MILLIS
 
 private val MINUTE_PLURAL = RussianPlural("минуту", "минуты", "минут")
@@ -23,6 +24,7 @@ enum class TimeUnits(val millis: Long) {
     HOUR(HOUR_IN_MILLIS),
     DAY(DAY_IN_MILLIS),
     WEEK(WEEK_IN_MILLIS),
+    MONTH(MONTH_IN_MILLIS),
     YEAR(YEAR_IN_MILLIS)
 }
 
@@ -36,8 +38,8 @@ fun Date.add(value: Int, units: TimeUnits): Date {
     return this
 }
 
-fun Date.humanizeDiff(): String {
-    var diff = this.time - System.currentTimeMillis()
+fun Date.humanizeDiff(date: Date = Date()): String {
+    var diff = this.time - date.time
     val isFuture: Boolean = diff >= 0
 
     fun format(s: String): String {
