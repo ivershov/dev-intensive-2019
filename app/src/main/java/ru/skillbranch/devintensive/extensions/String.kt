@@ -1,6 +1,6 @@
 package ru.skillbranch.devintensive.extensions
 
-fun String.truncate(len: Int = 16): String {
+fun String.truncate(len: Int = 17): String {
     val result = trim()
     if (result.length <= len)
         return result
