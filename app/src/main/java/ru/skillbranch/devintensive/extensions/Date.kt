@@ -1,5 +1,6 @@
 package ru.skillbranch.devintensive.extensions
 
+import ru.skillbranch.devintensive.utils.plural.Plural
 import ru.skillbranch.devintensive.utils.plural.RussianPlural
 import java.text.SimpleDateFormat
 import java.util.*
@@ -13,19 +14,24 @@ const val WEEK_IN_MILLIS = 7 * DAY_IN_MILLIS
 const val MONTH_IN_MILLIS = 30 * DAY_IN_MILLIS
 const val YEAR_IN_MILLIS = 365 * DAY_IN_MILLIS
 
+private val SECOND_PLURAL = RussianPlural("секунду", "секунды", "секунд")
 private val MINUTE_PLURAL = RussianPlural("минуту", "минуты", "минут")
 private val HOUR_PLURAL = RussianPlural("час", "часа", "часов")
 private val DAY_PLURAL = RussianPlural("день", "дня", "дней")
+private val WEEK_PLURAL = RussianPlural("неделю", "недели", "недель")
+private val MONTH_PLURAL = RussianPlural("месяц", "месяца", "месяцев")
+private val YEAR_PLURAL = RussianPlural("год", "года", "лет")
 
-enum class TimeUnits(val millis: Long) {
-    MILLISECOND(1L),
-    SECOND(SECOND_IN_MILLIS),
-    MINUTE(MINUTE_IN_MILLIS),
-    HOUR(HOUR_IN_MILLIS),
-    DAY(DAY_IN_MILLIS),
-    WEEK(WEEK_IN_MILLIS),
-    MONTH(MONTH_IN_MILLIS),
-    YEAR(YEAR_IN_MILLIS)
+enum class TimeUnits(val millis: Long, val plural: Plural) {
+    SECOND(SECOND_IN_MILLIS, SECOND_PLURAL),
+    MINUTE(MINUTE_IN_MILLIS, MINUTE_PLURAL),
+    HOUR(HOUR_IN_MILLIS, HOUR_PLURAL),
+    DAY(DAY_IN_MILLIS, DAY_PLURAL),
+    WEEK(WEEK_IN_MILLIS, WEEK_PLURAL),
+    MONTH(MONTH_IN_MILLIS, MONTH_PLURAL),
+    YEAR(YEAR_IN_MILLIS, YEAR_PLURAL);
+
+    fun plural(value: Int) = "$value " + plural.get(value.toLong())
 }
 
 fun Date.format(pattern: String = "HH:mm:ss dd.MM.yy"): String {
