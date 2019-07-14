@@ -44,7 +44,7 @@ object TransliterationHelper {
             .toCharArray()
             .forEach {
                 val isUpperCase = it.isUpperCase()
-                var latinSymbol = map.getOrDefault(it.toLowerCase(), it.toString())
+                var latinSymbol = map.getOrElse(it.toLowerCase(), { it.toString() })
 
                 if (isUpperCase) latinSymbol = latinSymbol.capitalize()
                 result = result.plus(latinSymbol)
